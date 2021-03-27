@@ -34,7 +34,7 @@ while($row = $result->fetch_array()){
 <body>
 <style>
     .product-container{
-        background: gray;
+        background: blue;
         margin-bottom: 10px;
         width: 10%;
     }
