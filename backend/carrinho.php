@@ -1,5 +1,5 @@
 <?php
-    session_start();
+session_start();
 
 $conn = mysqli_connect("localhost","root","", "testes");
 
@@ -11,18 +11,25 @@ while($row = $result->fetch_array()){
 }
 
     $_SESSION['array'] = [];
+    $_SESSION['array_quant'] = [];
+    $qtds = '';
     $pedido_submit = '';
     $count_session = $tot_produtos;
 
     if($_POST <> Array()){ // Se não tiver falor no POST ele retorna Array, então não mostre os erros
-        if(isset($_SESSION['carrinho'][$_POST['myid']])){
+        if(isset($_SESSION['carrinho'][$_POST['myid']]) && isset($_SESSION['quant'][$_POST['myid']])){
             $_SESSION['carrinho'][$_POST['myid']];
             echo 'Você já adicionou esse item <br>';
             //$count_session += 10;
+            if($_SESSION['quant'][$_POST['myid']] <> $_SESSION['quant'][$_POST['myid']] = $_POST['quant']){
+                $_SESSION['quant'][$_POST['myid']] = $_POST['quant'];
+                // SE A QUANTIDADE JÁ GRAVADA FOR DIFERENTE DA NOVA ADIÇÃO, SUBSTITUA
+            }
            
         }
         else{
             $_SESSION['carrinho'][$_POST['myid']] = $_POST['myid'];
+            $_SESSION['quant'][$_POST['myid']] = $_POST['quant'];
             //$count_session += 10;
         }
     }
@@ -34,6 +41,7 @@ while($row = $result->fetch_array()){
         $i += 1;
         if(isset($_SESSION['carrinho'][$i])){
             array_push($_SESSION['array'],$_SESSION['carrinho'][$i]);
+            array_push($_SESSION['array_quant'],$_SESSION['quant'][$i]);
         }
         else{
             $nExiste = 'Não existe';
@@ -45,7 +53,11 @@ $myProducts = '';
 foreach($_SESSION['array'] as $key=>$value){
     $myProducts .= $value.',';
 }
+foreach($_SESSION['array_quant'] as $key=>$value){
+    $qtds .= $value.',';
+}
 $resultado = substr($myProducts,0,-1);
+$quant = substr($qtds,0,-1);
 if($resultado == ''){
     echo 'Seu carrinho está vazio!';
     $cHtml = '';
@@ -74,8 +86,6 @@ else{
                 <input type='text' name='myid' value='$id' readonly=“true”>
                 <div class='name' name='nome'>$nome_produto</div>
                 <div class='valor' name='valor'>$valor</div>
-                <label for='quant'>Quantidade:</label>
-                <input type='number' name='quant' class='quant' value='1'>
                 <button type='submit'>Excluir</button>
             </div>
         </form> 
@@ -108,5 +118,11 @@ else{
         echo $cHtml;
         echo $pedido_submit;
     ?>
+
+    <script>
+        if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 </body>
 </html>

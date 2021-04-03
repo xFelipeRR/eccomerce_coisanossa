@@ -1,3 +1,13 @@
+<?php
+session_start();
+$qtds = '';
+foreach($_SESSION['array_quant'] as $key=>$value){
+    $qtds .= $value.',';
+}
+$quant = substr($qtds,0,-1);
+
+echo $quant;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,5 +27,11 @@
 
         <input type="submit" value="1">
 </form>
+
+<script>
+    if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 </body>
 </html>

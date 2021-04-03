@@ -38,12 +38,18 @@ if(isset($_SESSION['array'])){
         $result = $conn->query($query);
         $cHtml = '';
         $nome_produto = '';
+        $quant = '';
+        $i = 0;
     while($row = $result->fetch_array()){
+        $i += 1;
+
         $id = $row["ID"];
         $nome_produto .= $row["NOME_PRODUTO"].',';
-
         $valor = $row["VALOR"];
-    }
+
+        if(isset($_SESSION['array_quant'][$i]))
+            $quant = $_SESSION['array_quant'][$i];
+        }
 
     $produtos = substr($nome_produto,0,-1);
 
@@ -88,8 +94,15 @@ if(isset($_SESSION['array'])){
 
     <input type="text" name="person_name" hidden value=<?php echo $person_name?>>
     <input type="text" name="adress" hidden value=<?php echo $adress?>>
+    <input type="text" name="quant" hidden value=<?php echo $quant?>>
 
     <button type="submit">Terminar</button>
 </form>
+
+<script>
+    if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 </body>
 </html>

@@ -44,6 +44,8 @@ while($row = $result->fetch_array()){
         <label for="id">Código do Produto:</label>
         <input type="number" name="myid" value='<?php echo $id?>' readonly=“true”>
         <div class='name'>PRODUTO: <?php echo $nome_produto?> <br>VALOR: <?php echo $valor?></div>
+        <label for='quant'>Quantidade:</label>
+        <input type='number' name='quant' class='quant' value='1'>
         <input type="submit" value="Adicionar ao carrinho de compras">
     </div>
 </form>

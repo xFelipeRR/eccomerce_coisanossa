@@ -28,15 +28,24 @@ if(isset($_SESSION['array'])){
     {
         $pass = bin2hex(random_bytes(3)); // gera uma string pseudo-randômica criptograficamente segura de 6 caracteres
     } 
+    $queryPed = "INSERT INTO PEDIDOS (nome,endereco,pass) VALUES ('{$_SESSION['person_name']}','{$_SESSION['adress']}','$pass')";
+    $resultPed = $conn->query($queryPed);
+    $i = -1;
     while($row = $result->fetch_array()){
+        $i += 1;
         $id = $row["ID"];
         $nome_produto = $row["NOME_PRODUTO"];
         $produto_whats .= $row["NOME_PRODUTO"].',';
         $valor = $row["VALOR"];
 
+        if(isset($_SESSION['array_quant'][$i])){
+            $quant = $_SESSION['array_quant'][$i];
+        }
+
 
         // OBS: para usar sessions no select assim é preciso colocar entre aspas simples e colchetes
-        $sql = "INSERT INTO VENDAS (nome,cidade,pedido,pass) VALUES ('{$_SESSION['person_name']}','{$_SESSION['adress']}','$nome_produto','$pass')";
+        //$sql = "INSERT INTO VENDAS (nome,cidade,pedido,pass) VALUES ('{$_SESSION['person_name']}','{$_SESSION['adress']}','$nome_produto','$pass')";
+        $sql = "INSERT INTO VENDAS (pedido,quantidade,pass) VALUES ('$nome_produto','$quant','$pass')";
         if (mysqli_query($conn, $sql)) {
             $produtos = substr($produto_whats,0,-1);
             $fpdf = "<script>window.open('impressao_pedido.php?pass=$pass', '_blank');</script>";

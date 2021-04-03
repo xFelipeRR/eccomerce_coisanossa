@@ -11,6 +11,7 @@
         if(isset($_SESSION['carrinho'][$id]))
         {
             unset($_SESSION['carrinho'][$id]);
+            unset($_SESSION['quant'][$id]);
             $alert = '<script>alert("Item '.$id.' excluído do carrinho")</script>';
             header("Refresh: 0; url = carrinho.php");
         }
@@ -27,6 +28,12 @@
 </head>
 <body>
     <?php echo $alert;?>
+
+    <script>
+        if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
     
 </body>
 </html>
