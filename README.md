@@ -1,2 +1,2 @@
 # eccomerce_coisanossa
- Desenvolvimento de um eccomerce básico
+ Testing arrays and structures for a ecommerce
